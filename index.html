@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+<meta charset="UTF-8">   <!-- ← ZUERST -->
 <meta name="google-site-verification" content="c3k_7ZNmbmxdBKGfiK4qvZW1Qd-Al-PKKklsO5-1IBg" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- EmailJS -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>emailjs.init('CyDt236EbwvUA-7oy');</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A. Derman — KI-Entwickler & Full-Stack Engineer</title>
 <meta name="description" content="Portfolio von Abdourazaki Derman — KI-Entwicklung, Web-Apps, Mobile Apps. Karlsruhe & Remote.">
 <style>
@@ -1147,14 +1147,42 @@ function filterTab(el){
 function selectBudget(el){
   document.querySelectorAll('.bpill').forEach(p => p.classList.remove('on'));
   el.classList.add('on');
+  document.getElementById('budgetInput').value = el.textContent;
 }
 
 // ── KONTAKT FORMULAR ──
 function submitForm(e){
   e.preventDefault();
-  document.getElementById('formContent').style.display = 'none';
-  document.getElementById('formSuccess').classList.add('show');
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = '⏳ Wird gesendet...';
+  btn.disabled = true;
+
+  const form = document.getElementById('contactForm');
+
+  // from_name zusammensetzen
+  const firstName = form.from_firstname.value;
+  const lastName  = form.from_lastname.value;
+
+  const params = {
+    from_name:    firstName + ' ' + lastName,
+    from_email:   form.from_email.value,
+    project_type: form.project_type.value || 'Nicht angegeben',
+    budget:       form.budget.value       || 'Nicht angegeben',
+    message:      form.message.value,
+  };
+
+  emailjs.send('service_vhdmqap', 'template_w6llmeg', params)
+    .then(() => {
+      document.getElementById('formContent').style.display = 'none';
+      document.getElementById('formSuccess').classList.add('show');
+    })
+    .catch((err) => {
+      console.error('EmailJS Fehler:', err);
+      btn.textContent = '❌ Fehler — bitte erneut versuchen';
+      btn.disabled = false;
+    });
 }
+
 </script>
 
 </body>
