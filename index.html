@@ -2,6 +2,9 @@
 <html lang="de">
 <head>
 <meta name="google-site-verification" content="c3k_7ZNmbmxdBKGfiK4qvZW1Qd-Al-PKKklsO5-1IBg" />
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('CyDt236EbwvUA-7oy');</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A. Derman — KI-Entwickler & Full-Stack Engineer</title>
@@ -988,26 +991,26 @@ nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between
           <div class="fwt">Projekt anfragen</div>
           <div class="fws">Füll das Formular aus — ich melde mich innerhalb von 24h bei dir.</div>
 
-          <form onsubmit="submitForm(event)">
+          <form id="contactForm" onsubmit="submitForm(event)">
             <div class="frow">
               <div class="fg">
                 <label class="fl">Vorname</label>
-                <input class="fi" type="text" placeholder="Max" required>
+                <input class="fi" type="text" name="from_firstname" placeholder="Max" required>
               </div>
               <div class="fg">
                 <label class="fl">Nachname</label>
-                <input class="fi" type="text" placeholder="Mustermann" required>
+                <input class="fi" type="text" name="from_lastname" placeholder="Mustermann" required>
               </div>
             </div>
 
             <div class="fg">
               <label class="fl">E-Mail</label>
-              <input class="fi" type="email" placeholder="max@beispiel.de" required>
+              <input class="fi" type="email" name="from_email" placeholder="max@beispiel.de" required>
             </div>
 
             <div class="fg">
               <label class="fl">Projektart</label>
-              <select class="fse">
+              <select class="fse" name="project_type">
                 <option value="">— Bitte wählen —</option>
                 <option>KI-Entwicklung / LLM Integration</option>
                 <option>Backend &amp; API Entwicklung</option>
@@ -1021,6 +1024,7 @@ nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between
 
             <div class="fg">
               <label class="fl">Budget (optional)</label>
+              <input type="hidden" name="budget" id="budgetInput" value="">
               <div class="bpills">
                 <div class="bpill" onclick="selectBudget(this)">unter 1k €</div>
                 <div class="bpill" onclick="selectBudget(this)">1k – 5k €</div>
@@ -1032,13 +1036,14 @@ nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between
 
             <div class="fg">
               <label class="fl">Nachricht</label>
-              <textarea class="fta" placeholder="Beschreib dein Projekt, deine Idee oder deine Frage..." required></textarea>
+              <textarea class="fta" name="message" placeholder="Beschreib dein Projekt, deine Idee oder deine Frage..." required></textarea>
             </div>
 
-            <button type="submit" class="fsub">
+            <button type="submit" class="fsub" id="submitBtn">
               🚀 Nachricht absenden
             </button>
           </form>
+
         </div>
 
         <!-- Erfolgs-State -->
